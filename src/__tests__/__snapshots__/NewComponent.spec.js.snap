@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewComponet renders well 1`] = `
+<Fragment>
+  <h1>
+    New Component
+  </h1>
+  <button
+    onClick={[Function]}
+  >
+    0
+  </button>
+</Fragment>
+`;
