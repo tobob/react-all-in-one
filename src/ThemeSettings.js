@@ -12,6 +12,7 @@ export default class ThemeSettings extends Component {
             {this.props.buttonRender(changeTheme, "blue")}
             {this.props.buttonRender(changeTheme, "red")}
             {this.props.buttonRender(changeTheme, "pink")}
+            {this.props.buttonRender(changeTheme, "violet")}
           </div>
         )}
       </ThemeContent.Consumer>

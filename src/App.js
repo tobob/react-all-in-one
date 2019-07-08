@@ -13,9 +13,9 @@ class App extends Component {
   };
 
   componentWillMount() {
-    const source = this.props.fetchTodos();
+    this.source = this.props.fetchTodos();
     setTimeout(() => {
-      source.cancel("Bob rule this req");
+      this.source.cancel("Bob rule this req");
     }, 1);
   }
 
@@ -50,7 +50,7 @@ class App extends Component {
           <ThemeSettings
             buttonRender={(changeTheme, color) => (
               <button onClick={() => changeTheme(color)}>
-                Change theme to: {color}
+                Fancy button {color}
               </button>
             )}
           />
