@@ -1,26 +1,76 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import "./App.css";
+import ThemeContext from "./context";
+import ThemeSettings from "./ThemeSettings";
+import ThemeSettingsWrapper from "./ThemeSettingsWrapper";
+import BuggyButton from "./BuggyButton";
+import { fetchTodos, fetchFirst3Pages } from "./reducers/todos/actions";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    theme: "red"
+  };
+
+  componentWillMount() {
+    const source = this.props.fetchTodos();
+    setTimeout(() => {
+      source.cancel("Bob rule this req");
+    }, 1);
+  }
+
+  changeTheme = theme => {
+    this.setState({ theme });
+  };
+
+  render() {
+    console.log(this.props);
+    const { todos, fetchFirst3Pages } = this.props;
+    const { theme, error } = this.state;
+
+    if (!todos) {
+      return null;
+    }
+
+    if (error) {
+      return <h1>{error}</h1>;
+    }
+
+    return (
+      <ThemeContext.Provider value={{ theme, changeTheme: this.changeTheme }}>
+        <div>
+          <h3>Todo List</h3>
+          <button onClick={fetchFirst3Pages}>Fetch next 3 pages</button>
+          <ul>
+            {todos.map(todo => (
+              <li>{todo.title}</li>
+            ))}
+          </ul>
+          <BuggyButton />
+          <ThemeSettings
+            buttonRender={(changeTheme, color) => (
+              <button onClick={() => changeTheme(color)}>
+                Change theme to: {color}
+              </button>
+            )}
+          />
+          <ThemeSettingsWrapper />
+        </div>
+      </ThemeContext.Provider>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  todos: state.todos
+});
+
+const mapDispatchToProps = {
+  fetchTodos,
+  fetchFirst3Pages
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
