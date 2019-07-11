@@ -6,6 +6,7 @@ import ThemeSettings from "./ThemeSettings";
 import ThemeSettingsWrapper from "./ThemeSettingsWrapper";
 import BuggyButton from "./BuggyButton";
 import { fetchTodos, fetchFirst3Pages } from "./reducers/todos/actions";
+import HookComponent from './HookComponent';
 
 class App extends Component {
   state = {
@@ -55,6 +56,7 @@ class App extends Component {
             )}
           />
           <ThemeSettingsWrapper />
+          <HookComponent text='11111aaaa'/>
         </div>
       </ThemeContext.Provider>
     );
